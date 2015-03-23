@@ -1,8 +1,106 @@
 <h1>Builder</h1>
 
-<p>Used to separate the construction of a complex object from its representation so that the same construction process can create different objects representations</p>
+<p>Usado para separar la construcción de objetos complejos de su representación para que el mismo proceso de construcción pueda ser usado para crear diferentes objetos con diferentes representaciones</p>
 
-<p>The Code generate the following pizzas</p>
+<p>Por ejemplo supongamos que queremos crear diferentes pizzas en donde se cambia la masa, salsa y la cubierta.</p>
+
+<pre><code>class Pizza
+    def set_dough(dough)
+        @dough = dough
+    end
+
+    def set_sauce(sauce)
+        @sauce = sauce
+    end
+
+    def set_topping(topping)
+        @topping = topping
+    end
+end
+</code></pre>
+
+<p>Creamos una clase constructor que se usa para servir de base o interfaz para los constructores específicos:</p>
+
+<pre><code>class PizzaBuilder
+    def get_pizza
+        @pizza
+    end
+
+    def create_new_pizza
+        @pizza = Pizza.new
+    end
+end</code></pre>
+
+<p>Creamos los constructores específicos para diferentes tipos de objetos, en este caso usaremos constructores para una pizza hawaiiana y una picante</p>
+
+<pre><code>class HawaiianPizzaBuilder < PizzaBuilder
+    def build_dough
+        @pizza.set_dough('cross')
+    end
+
+    def build_sauce
+        @pizza.set_sauce('mild')
+    end
+
+    def build_topping
+        @pizza.set_topping('ham + pinneaple')
+    end
+end</code></pre>
+
+<pre><code>class SpicyPizzaBuilder < PizzaBuilder
+    def build_dough
+        @pizza.set_dough('pan baked')
+    end
+
+    def build_sauce
+        @pizza.set_sauce('hot')
+    end
+
+    def build_topping
+        @pizza.set_topping('pepperoni + salami')
+    end
+end</code></pre>
+
+<p>Finalmente creamos una clase que se encargue de la construcción de la pizza dado el builder específico que reciba</p>
+
+<pre><code>class Cook
+    def set_pizza_builder(pb)
+        @pizza_builder = pb
+    end
+
+    def get_pizza
+        @pizza_builder.get_pizza()
+    end
+
+    def construct_pizza
+        @pizza_builder.create_new_pizza()
+        @pizza_builder.build_dough()
+        @pizza_builder.build_sauce()
+        @pizza_builder.build_topping()
+    end
+end
+</code></pre>
+
+<p>Finalmente creamos las dos pizzas usando el Cook que creamos</p>
+
+<pre><code>@cook = Cook.new;
+@hawaiian_pizza_builder = HawaiianPizzaBuilder.new;
+@spicy_pizza_builder   = SpicyPizzaBuilder.new;
+@pizzas = Array.new
+
+@cook.set_pizza_builder(@hawaiian_pizza_builder);
+@cook.construct_pizza();
+
+@hawaiian = @cook.get_pizza();
+@pizzas << @hawaiian.open();
+
+@cook.set_pizza_builder(@spicy_pizza_builder);
+@cook.construct_pizza();
+
+@spicy = @cook.get_pizza();
+@pizzas << @spicy.open();</code></pre>
+
+<p>Las pizzas resultantes son:</p>
 
 <ul>
     <% @pizzas.each do |pizza| %>
