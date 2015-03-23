@@ -48,15 +48,6 @@ class PizzaBuilder
     def create_new_pizza
         @pizza = Pizza.new
     end
-
-    def build_dough
-    end
-
-    def build_sauce
-    end
-
-    def build_topping
-    end
 end
 
 class HawaiianPizzaBuilder < PizzaBuilder
