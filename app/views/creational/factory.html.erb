@@ -1,0 +1,43 @@
+<p>Se crea una clase padre en donde se definen los métodos y funciones comunes, en el caso de Ruby no es necesario tener una clase con funciones virtuales para hacer válido el polimorifsmo</p>
+
+<pre><code>class Computer
+end</code></pre>
+
+<p>Para cada una de las clases hijos definimos una misma función para diferenciarlas, el polimorfismo se usara en estas</p>
+
+<pre><code>class Laptop < Computer
+    def type
+        'Laptop'
+    end
+end</code></pre>
+
+<pre><code>class Desktop < Computer
+    def type
+        'Desktop'
+    end
+end</code></pre>
+
+<p>Creamos la clase factory que se encarga de crear la clase deseada</p>
+
+<pre><code>class ComputerFactory
+    def getComputer(type)
+        if type == "Laptop"
+            Laptop.new
+        elsif type == "Desktop"
+            Desktop.new
+        end
+    end
+end</code></pre>
+
+<p>Creamos las clases:</p>
+
+<pre><code>@factory = ComputerFactory.new
+@laptop = @factory.getComputer('Laptop')
+@desktop = @factory.getComputer('Desktop')</code></pre>
+
+<p>Mandamos a imprimir (en este caso en rails, en otras un simple puts basta):</p>
+
+<pre><code>&lt;p&gt;Desktop regresa: &lt;b&gt;&lt;%= @desktop.type %&gt;&lt;/b&gt; y Laptop regresa: &lt;b&gt;&lt;%= @laptop.type %&gt;&lt;/b&gt;&lt;/p&gt;</code></pre>
+
+<p>Desktop regresa: <b><%= @desktop.type %></b> y Laptop regresa: <b><%= @laptop.type %></b></p>
+

@@ -17,6 +17,12 @@ class CreationalController < ApplicationController
         @spicy = @cook.get_pizza();
         @pizzas << @spicy.open();
     end
+
+    def factory
+        @factory = ComputerFactory.new
+        @laptop = @factory.getComputer('Laptop')
+        @desktop = @factory.getComputer('Desktop')
+    end
 end
 
 ##############################################################################################
@@ -92,5 +98,33 @@ class Cook
         @pizza_builder.build_dough()
         @pizza_builder.build_sauce()
         @pizza_builder.build_topping()
+    end
+end
+
+##############################################################################################
+# Factory classes:
+##############################################################################################
+class Computer
+end
+
+class Laptop < Computer
+    def type
+        'Laptop'
+    end
+end
+
+class Desktop < Computer
+    def type
+        'Desktop'
+    end
+end
+
+class ComputerFactory
+    def getComputer(type)
+        if type == "Laptop"
+            Laptop.new
+        elsif type == "Desktop"
+            Desktop.new
+        end
     end
 end
