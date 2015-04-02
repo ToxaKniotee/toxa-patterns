@@ -20,7 +20,7 @@ end</code></pre>
 <p>Creamos la clase factory que se encarga de crear la clase deseada</p>
 
 <pre><code>class ComputerFactory
-    def getComputer(type)
+    def get_computer(type)
         if type == "Laptop"
             Laptop.new
         elsif type == "Desktop"
@@ -32,8 +32,8 @@ end</code></pre>
 <p>Creamos las clases:</p>
 
 <pre><code>@factory = ComputerFactory.new
-@laptop = @factory.getComputer('Laptop')
-@desktop = @factory.getComputer('Desktop')</code></pre>
+@laptop = @factory.get_computer('Laptop')
+@desktop = @factory.get_computer('Desktop')</code></pre>
 
 <p>Mandamos a imprimir (en este caso en rails, en otras un simple puts basta):</p>
 

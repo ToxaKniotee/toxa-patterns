@@ -20,13 +20,13 @@ class CreationalController < ApplicationController
 
     def factory
         @factory = ComputerFactory.new
-        @laptop = @factory.getComputer('Laptop')
-        @desktop = @factory.getComputer('Desktop')
+        @laptop = @factory.get_computer('Laptop')
+        @desktop = @factory.get_computer('Desktop')
     end
 
     def prototype
         # Agregamos el nuevo valor agregado por el usuario
-        @role = Factory::makeStooge(params[:choice].to_i)
+        @role = Factory::make_stooge(params[:choice].to_i)
     end
 
     def singleton
@@ -136,7 +136,7 @@ class Desktop < Computer
 end
 
 class ComputerFactory
-    def getComputer(type)
+    def get_computer(type)
         if type == "Laptop"
             Laptop.new
         elsif type == "Desktop"
@@ -156,7 +156,7 @@ class Larry < Stooge
         Larry.new
     end
 
-    def slapStick
+    def slap_stick
         'Larry: poke eyes'
     end
 end
@@ -166,7 +166,7 @@ class Moe < Stooge
         Moe.new
     end
 
-    def slapStick
+    def slap_stick
         'Moe: slap head'
     end
 end
@@ -176,7 +176,7 @@ class Curly < Stooge
         Curly.new
     end
 
-    def slapStick
+    def slap_stick
         'Curly: suffer abuse'
     end
 end
@@ -184,7 +184,7 @@ end
 class Factory
     @@s_prototypes = [0, Larry.new, Moe.new, Curly.new]
 
-    def self.makeStooge(choice)
+    def self.make_stooge(choice)
         if choice != nil and choice != 0
             @@s_prototypes[choice].clone
         end
