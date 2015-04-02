@@ -23,6 +23,12 @@ class CreationalController < ApplicationController
         @laptop = @factory.getComputer('Laptop')
         @desktop = @factory.getComputer('Desktop')
     end
+
+    def prototype
+        # Agregamos el nuevo valor agregado por el usuario
+        @role = Factory::makeStooge(params[:choice].to_i)
+    end
+
 end
 
 ##############################################################################################
@@ -125,6 +131,52 @@ class ComputerFactory
             Laptop.new
         elsif type == "Desktop"
             Desktop.new
+        end
+    end
+end
+
+##############################################################################################
+# Prototype classes:
+##############################################################################################
+class Stooge
+end
+
+class Larry < Stooge
+    def clone
+        Larry.new
+    end
+
+    def slapStick
+        'Larry: poke eyes'
+    end
+end
+
+class Moe < Stooge
+    def clone
+        Moe.new
+    end
+
+    def slapStick
+        'Moe: slap head'
+    end
+end
+
+class Curly < Stooge
+    def clone
+        Curly.new
+    end
+
+    def slapStick
+        'Curly: suffer abuse'
+    end
+end
+
+class Factory
+    @@s_prototypes = [0, Larry.new, Moe.new, Curly.new]
+
+    def self.makeStooge(choice)
+        if choice != nil and choice != 0
+            @@s_prototypes[choice].clone
         end
     end
 end
