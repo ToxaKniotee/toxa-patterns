@@ -29,6 +29,16 @@ class CreationalController < ApplicationController
         @role = Factory::makeStooge(params[:choice].to_i)
     end
 
+    def singleton
+        # Creamos dos clases para ver si resultan ser iguales
+        a, b = Klass.instance, Klass.instance
+        @result = a == b
+        begin
+            Klass.new
+        rescue
+            @error = $!
+        end
+    end
 end
 
 ##############################################################################################
@@ -179,4 +189,11 @@ class Factory
             @@s_prototypes[choice].clone
         end
     end
+end
+
+##############################################################################################
+# Singleton classes:
+##############################################################################################
+class Klass
+    include Singleton
 end

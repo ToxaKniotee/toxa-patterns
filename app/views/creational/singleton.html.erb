@@ -1,0 +1,21 @@
+<p>Las clases son iguales?: <%= @result %></p>
+
+<p>Error al intentar crear una nueva clase:<p/>
+<ul>
+    <p><b><%= @error %></b></p>
+</ul>
+
+<p>Código:</p>
+
+<pre><code>class Klass
+    include Singleton
+end</code></pre>
+
+<pre><code># Creamos dos clases para ver si resultan ser iguales
+a, b = Klass.instance, Klass.instance
+@result = a == b
+begin
+    Klass.new
+rescue
+    @error = $!
+end</code></pre>
