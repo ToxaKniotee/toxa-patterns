@@ -1,0 +1,77 @@
+<p>Salida:</p>
+
+<p>
+    Test 1 - author title with caps<br />
+    <%= @book1.show_author_title %><br />
+    <br />
+    Test 2 - author title with stars<br />
+    <%= @book2.show_author_title %> <br />
+    <br />
+    Test 3 - title author with caps<br />
+    <%= @book3.show_title_author %> <br />
+    <br />
+    Test 4 - title author with stars<br />
+    <%= @book4.show_title_author %>
+</p>
+
+<p>Código: </p>
+
+<pre><code>class BridgeBook
+    def initialize(author, title, choice)
+        @author = author
+        @title = author
+        if 'STARS' == choice
+            @bb_imp = BridgeBookStarsImp.new
+        else
+            @bb_imp = BridgeBookCapsImp.new
+        end
+    end
+
+    def show_author
+        @bb_imp.show_author(@author)
+    end
+
+    def show_title
+        @bb_imp.show_title(@title)
+    end
+end
+
+class BridgeBookAuthorTitle < BridgeBook
+    def show_author_title
+        "#{show_author} 's #{show_title}"
+    end
+end
+ 
+class BridgeBookTitleAuthor < BridgeBook
+    def show_title_author
+        "#{show_title} by #{show_author}"
+    end
+end
+ 
+class BridgeBookImp
+end
+
+class BridgeBookCapsImp < BridgeBookImp
+    def show_author(author_in)
+        author_in.upcase
+    end
+
+    def show_title(title_in)
+        title_in.upcase
+    end
+end
+
+class BridgeBookStarsImp < BridgeBookImp
+    def show_author(author_in)
+        author_in.tr(' ', '*')
+    end
+
+    def show_title(title_in)
+        title_in.tr(' ', '*')
+    end
+end</code></pre>
+
+<pre><code>@book1 = BridgeBookAuthorTitle.new('Larry Truett', 'Ruby for Cats', 'CAPS')
+@book2 = BridgeBookAuthorTitle.new('Larry Truett', 'Ruby for Cats', 'STARS')
+@book3 = BridgeBookTitleAuthor.new('Larry Truett', 'Ruby for Cats', 'CAPS')
+@book4 = BridgeBookTitleAuthor.new('Larry Truett', 'Ruby for Cats', 'STARS')</code></pre>
