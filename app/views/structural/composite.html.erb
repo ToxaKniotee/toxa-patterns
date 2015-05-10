@@ -1,0 +1,44 @@
+<h1>Composite</h1>
+
+<h2>Código</h2>
+
+<pre><code>class Item
+  @name = nil
+  @size = 0
+
+  def initialize(name)
+    @name = name
+  end
+
+  def name()
+    return @name
+  end
+
+  def size()
+    return @size
+  end
+end
+
+class File &lt; item
+  def initialize(name)
+    @name = name
+    @size = 1
+  end
+end
+
+class Folder &lt; Item
+  @files = []
+
+  def initialize(name)
+    @name = name
+    @files = []
+  end
+
+  def add_file(file)
+    @files &lt;&lt; file
+  end
+
+  def size()
+    return @files.inject(0) { |res, elm| res + elm.size() }
+  end
+end</code></pre>
