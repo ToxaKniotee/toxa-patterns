@@ -16,9 +16,9 @@ class StructuralController < ApplicationController
     @file2 = File.new("license")
     @file3 = File.new("a.out")
 
-    folder1 = Folder.new("Sub1");
-    folder2 = Folder.new("Sub2");
-    folder3 = Folder.new("Sub3");
+    folder1 = Folder.new("Sub1")
+    folder2 = Folder.new("Sub2")
+    folder3 = Folder.new("Sub3")
 
     @folder1.addFile(@file1)
     @folder2.addFile(@file2)
@@ -117,7 +117,6 @@ end
 ##############################################################################################
 
 class Item
-  @name = nil
   @size = 0
 
   def initialize(name)
@@ -133,7 +132,7 @@ class Item
   end
 end
 
-class File < item
+class File < Item
   def initialize(name)
     @name = name
     @size = 1
@@ -141,8 +140,6 @@ class File < item
 end
 
 class Folder < Item
-  @files = []
-
   def initialize(name)
     @name = name
     @files = []
