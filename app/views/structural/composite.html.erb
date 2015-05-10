@@ -3,7 +3,6 @@
 <h2>Código</h2>
 
 <pre><code>class Item
-  @name = nil
   @size = 0
 
   def initialize(name)
@@ -19,7 +18,7 @@
   end
 end
 
-class File &lt; item
+class CustomFile &lt; Item
   def initialize(name)
     @name = name
     @size = 1
@@ -35,10 +34,30 @@ class Folder &lt; Item
   end
 
   def add_file(file)
-    @files &lt;&lt; file
+    if !file.nil?
+      @files &lt;&lt; file
+    end
   end
 
   def size()
-    return @files.inject(0) { |res, elm| res + elm.size() }
+    return @files.inject(0) { |res,elm| res + elm.size() }
   end
 end</code></pre>
+
+<h2>Example</h2>
+
+<pre><code>file1 = CustomFile.new("readme")
+file2 = CustomFile.new("license")
+file3 = CustomFile.new("a.out")
+
+folder1 = Folder.new("Sub1")
+folder2 = Folder.new("Sub2")
+folder3 = Folder.new("Sub3")
+
+folder1.add_file(file1)
+folder2.add_file(file2)
+folder3.add_file(file3)
+folder2.add_file(folder1)
+folder3.add_file(folder2)</code></pre>
+
+<p>Folder 3 size: <%= @size %></p>

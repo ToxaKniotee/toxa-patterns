@@ -12,19 +12,21 @@ class StructuralController < ApplicationController
   end
 
   def composite
-    @file1 = File.new("readme")
-    @file2 = File.new("license")
-    @file3 = File.new("a.out")
+    file1 = CustomFile.new("readme")
+    file2 = CustomFile.new("license")
+    file3 = CustomFile.new("a.out")
 
     folder1 = Folder.new("Sub1")
     folder2 = Folder.new("Sub2")
     folder3 = Folder.new("Sub3")
 
-    @folder1.addFile(@file1)
-    @folder2.addFile(@file2)
-    @folder3.addFile(@file3)
-    @folder2.addFile(@subFolder1)
-    @folder3.addFile(@subFolder2)
+    folder1.add_file(file1)
+    folder2.add_file(file2)
+    folder3.add_file(file3)
+    folder2.add_file(folder1)
+    folder3.add_file(folder2)
+
+    @size = folder3.size()
   end
 end
 
@@ -132,7 +134,7 @@ class Item
   end
 end
 
-class File < Item
+class CustomFile < Item
   def initialize(name)
     @name = name
     @size = 1
@@ -140,6 +142,8 @@ class File < Item
 end
 
 class Folder < Item
+  @files = []
+
   def initialize(name)
     @name = name
     @files = []
@@ -150,6 +154,6 @@ class Folder < Item
   end
 
   def size()
-    return @files.inject(0) { |res, elm| res + elm.size() }
+    return @files.inject(0) { |res,elm| res + elm.size() }
   end
 end
